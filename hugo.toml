@@ -1,6 +1,6 @@
 baseURL = 'https://notes.rjchow.com/'
 languageCode = 'en-us'
-title = "RJ's collection of writing"
+title = "RJChow's Notes"
 copyright = 'RJChow' # Used in the footer copyright mention.
 enableRobotsTXT = true # IMPORTANT: set to true if you want to use the theme's genAI/LLM web crawler blocking feature.
 
@@ -14,18 +14,18 @@ enableRobotsTXT = true # IMPORTANT: set to true if you want to use the theme's g
   page = ['html']
 
 [menus]
-  [[menus.main]]
-    name = 'Notes'
-    pageRef = '/notes'
-    weight = 20
+  #[[menus.main]]
+  #  name = 'Notes'
+  #  pageRef = '/notes'
+  #  weight = 20
   [[menus.main]]
     name = 'Posts'
     pageRef = '/posts'
     weight = 30
-  [[menus.main]]
-    name = 'Graph'
-    pageRef = '/graph'
-    weight = 40
+  #[[menus.main]]
+  #  name = 'Graph'
+  #  pageRef = '/graph'
+  #  weight = 40
 
 [markup]
   [markup.highlight]
@@ -36,7 +36,37 @@ enableRobotsTXT = true # IMPORTANT: set to true if you want to use the theme's g
     [markup.goldmark.parser]
       [markup.goldmark.parser.attribute]
         block = true
+    [markup.goldmark.renderer]
+      unsafe = true
 
 [caches]
   [caches.images]
     dir = ':cacheDir/images'
+
+[params]
+    [params.home]
+    # Display recent blog posts on the homepage.
+    # Default: true
+    showRecentPosts = true
+
+    # Set how many recent blog posts to show.
+    # Default: 3
+    recentPostsLimit = 3
+
+    # Display recent notes on the homepage.
+    # Default: true
+    showRecentNotes = true
+
+    # Set how many recent notes to show.
+    # Default: 5
+    recentNotesLimit = 5
+
+  # Notes page setup
+  [params.notes]
+    # Set the number of notes to list on each page.
+    # Default: 20
+    pageSize = 20
+
+    # Show a filter option for note categories above the notes list.
+    # Default: true
+    showCategoryFilter = true

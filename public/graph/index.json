@@ -1,4 +1,15 @@
 {
-  "graph": {},
-  "pages": {}
+  "graph": {
+    "/posts/hello-world/": {
+      "in": [],
+      "out": []
+    }
+  },
+  "pages": {
+    "/posts/hello-world/": {
+      "permalink": "/posts/hello-world/",
+      "section": "posts",
+      "title": "Hello World"
+    }
+  }
 }
