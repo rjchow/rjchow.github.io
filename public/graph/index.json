@@ -3,6 +3,10 @@
     "/posts/hello-world/": {
       "in": [],
       "out": []
+    },
+    "/posts/llm-explainer/": {
+      "in": [],
+      "out": []
     }
   },
   "pages": {
@@ -10,6 +14,11 @@
       "permalink": "/posts/hello-world/",
       "section": "posts",
       "title": "Hello World"
+    },
+    "/posts/llm-explainer/": {
+      "permalink": "/posts/llm-explainer/",
+      "section": "posts",
+      "title": "LLM Explainer"
     }
   }
 }
