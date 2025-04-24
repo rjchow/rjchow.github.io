@@ -5,7 +5,9 @@ tags=["post", "AI", "Large Language Models", "ChatGPT", "Machine Learning", "Ope
 draft= false
 +++
 
-There's been quite a few articles that's been written about AI all over the internet, with various technical depths and contexts. But I find that there's a opportunity here to provide an explainer without specialist ML/AI/Statistics background knowledge and jargon. The aim of this article is to provide a background on Large Language Model (LLM) progression, and a more informed perspective on how LLMs work and their limitations.
+There's been quite a few articles that's been written about AI all over the internet, with various technical depths and contexts. But I find that there's a opportunity here to provide an explainer without specialist ML/AI/Statistics background knowledge and jargon. 
+<!--more-->
+The aim of this article is to provide a background on Large Language Model (LLM) progression, and a more informed perspective on how LLMs work and their limitations.
 
 Disclaimer: this article consists of ~95% organic, free-range, fair trade, human-written words. It is not original research but rather secondary research with the aid of LLMs and search engines.
 
