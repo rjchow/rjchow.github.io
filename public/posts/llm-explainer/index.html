@@ -32,7 +32,7 @@
   <meta itemprop="description" content="There’s been quite a few articles that’s been written about AI all over the internet, with various technical depths and contexts. But I find that there’s a opportunity here to provide an explainer without specialist ML/AI/Statistics background knowledge and jargon.">
   <meta itemprop="datePublished" content="2025-04-24T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-04-24T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3150">
+  <meta itemprop="wordCount" content="3331">
   <meta itemprop="keywords" content="Post,AI,Large Language Models,ChatGPT,Machine Learning,OpenAI">
 
   <meta name="twitter:card" content="summary">
@@ -71,9 +71,9 @@
   ],
   "mainEntityOfPage": "http://localhost:1313/posts/llm-explainer/",
   "name": "LLM Explainer",
-  "timeRequired": "PT15M",
+  "timeRequired": "PT16M",
   "url": "http://localhost:1313/posts/llm-explainer/",
-  "wordCount": 3150
+  "wordCount": 3331
 }
 </script>
 
@@ -136,7 +136,28 @@
     </a>
   
 </h3>
-<p>I&rsquo;ve seen some sentiment (often perceived to be Anti-AI) that LLMs are not to be relied on because they just generate sequences of words. This is somewhat true to an extent, but to completely dismiss them on that basis would be to disregard a large amount of progress on top of them being word sequence generators. To understand why, I will first introduce some working knowledge of LLMs, and then lay out some of the most recent advancements in LLM that resulted in each generational increment.</p>
+<p>I&rsquo;ve seen some <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-01"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-01"
+    for="sidenote-checkbox-01"
+    class="sidenote-mark"
+    >sentiment</label
+  >
+  <small id="sidenote-01" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>often perceived to be Anti-AI<span class="sr-only">)</span>
+  </small>
+</span>
+that LLMs are not to be relied on because they just generate sequences of words.</p>
+<p>This is somewhat true to an extent, but to completely dismiss them on that basis would be to disregard a large amount of progress on top of them being word sequence generators.</p>
+<p>To understand why, I will first introduce some working knowledge of LLMs, and then lay out some of the most recent advancements in LLM that resulted in each generational increment.</p>
 <h3 id="basics-about-how-llms-work" class="scroll-mt-8 group">
   Basics about how LLMs work
   
@@ -187,8 +208,70 @@
     </a>
   
 </h4>
-<p>LLMs are an advanced form of deep neural networks (DNN). Neural networks have a training phase first, and then the &lsquo;model&rsquo; which is produced can be used to predict outputs when given inputs (also called inference). They start as a blank (or randomised) slate, and the training process iteratively evolves the software towards the goal of predicting the text sequences present in the training data. The number of iterations is not a fixed number, but rather only terminates when it is determined that the output is sufficiently good enough - keep in mind that it requires a lot of computing power for each training iteration. This is especially so the larger the model and training data set size.</p>
-<p>Neural networks are made of numerous small processing units, and the training adjusts how each unit relates to each other. This can give rise to emergent behaviour all on its own. The size of LLMs are actually gigantic (Llama 3.1 405b ~ 1.5TB of RAM, Deepseek R1 ~ <a href="https://snowkylin.github.io/blogs/a-note-on-deepseek-r1.html">720GB of RAM</a>), and since this size is purely how the processing units are connected - you can see just how wildly complex they are. Trying to reverse engineer which units give rise to a given emergent behaviour is similar to neuroscience and thus LLMs are mostly a black box. If that sounds like an exaggeration, there is <a href="https://transformer-circuits.pub/">a series of papers from Anthropic</a> that cover this reverse engineering - and they use techniques like <em><a href="https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#argument-ablations">direct ablation</a></em> where specific parts of a miniature model is deleted and its&rsquo; reasoning abilities decline significantly. Wonder if they had to clear it with the ethics board?</p>
+<p>LLMs are an advanced form of deep neural networks (DNN). Neural networks have a training phase first, and then the &lsquo;model&rsquo; which is produced can be used to predict outputs when given inputs (also called inference).</p>
+<p>They start as a blank (or randomised) slate, and the training process iteratively evolves the <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-02"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-02"
+    for="sidenote-checkbox-02"
+    class="sidenote-mark"
+    >software</label
+  >
+  <small id="sidenote-02" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>specifically, neural network weights<span class="sr-only">)</span>
+  </small>
+</span>
+ towards the goal of predicting the text sequences present in the training data.</p>
+<p>The number of iterations is not a fixed number, but rather only terminates when it is determined that the output is sufficiently good enough.</p>
+<p>Keep in mind that it requires a lot of computing power for each training iteration. This is especially so the larger the model and training data set size.</p>
+<p>Neural networks are made of numerous small processing units, and the training adjusts how each unit relates to each other. This can give rise to emergent behaviour all on its own. The size of LLMs are actually <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-03"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-03"
+    for="sidenote-checkbox-03"
+    class="sidenote-mark"
+    >gigantic</label
+  >
+  <small id="sidenote-03" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>gigantic (Llama 3.1 405b ~ 1.5TB of RAM, Deepseek R1 ~ 720GB of RAM (source: https://snowkylin.github.io/blogs/a-note-on-deepseek-r1.html))<span class="sr-only">)</span>
+  </small>
+</span>
+, and since this size is purely how the processing units are connected - you can see just how wildly complex they are.</p>
+<p>Trying to reverse engineer which units give rise to a certain emergent behaviour is similar to neuroscience and thus LLMs are mostly a black box.</p>
+<p>If that sounds like an exaggeration, there is <a href="https://transformer-circuits.pub/">a series of papers from Anthropic</a> that cover this reverse engineering. They use techniques like <em><a href="https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html#argument-ablations">direct ablation</a></em>, where specific parts of a miniature model are deleted and its&rsquo; reasoning abilities decline <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-04"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-04"
+    for="sidenote-checkbox-04"
+    class="sidenote-mark"
+    >significantly.</label
+  >
+  <small id="sidenote-04" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Wonder if they had to clear it with the ethics board?<span class="sr-only">)</span>
+  </small>
+</span>
+</p>
 <h4 id="tokenisation-language-embedding--attention" class="scroll-mt-8 group">
   Tokenisation, Language Embedding &amp; Attention
   
@@ -214,9 +297,55 @@
     </a>
   
 </h4>
-<p>The input to a neural network is a list of numbers. In order for it to be able to process text, the text has to first be transformed into numbers. This process is called tokenisation and language embedding. The classic example of how this works is to represent words in a way such that mathematically, king - man + woman = queen. There&rsquo;s a small detail here where words are not turned into numbers, but first &rsquo;tokenised&rsquo;. This just means that a word like &rsquo;embedding&rsquo; may be split into  &rsquo;embed&rsquo; and &lsquo;##ing&rsquo;, rather than a 1-to-1 representation.</p>
-<p>The key insight that let LLMs catch the world&rsquo;s eye is the <a href="https://en.wikipedia.org/wiki/Attention_Is_All_You_Need">&lsquo;attention&rsquo; mechanism</a>. Simply, it gives the neural network the ability to consider not just a word or short word sequences (n-grams, e.g bank loan), but also the context of the entire input, and the position word was in. This means that the word <em>&ldquo;bank&rdquo;</em> in <em>&ldquo;The river near the bank was deep&rdquo;</em> and <em>&ldquo;The bank near the river was crowded&rdquo;</em> will be represented and interpreted differently by the LLM. I had to spend a few moments thinking about that myself.</p>
-<p>The representation of each word takes into account all the other words in the prompt, and that means that the number of computations scale as (context length)². Effectively, this means that the computation time required to process the input grows extremely quickly with the length of the context window. (32000 tokens)² = 1 billion, (1 million tokens)² = 1 trillion.</p>
+<p>The input to a neural network is a list of numbers. In order for it to be able to process text, the text has to first be transformed into numbers.</p>
+<p>This process is called tokenisation and language embedding. The classic example of how this works is to represent words in a way such that mathematically, king - man + woman = queen.</p>
+<p>There&rsquo;s a small detail here where words are not turned into numbers, but first &rsquo;tokenised&rsquo;. This just means that a word like &rsquo;embedding&rsquo; may be split into  &rsquo;embed&rsquo; and &lsquo;##ing&rsquo;, rather than a 1-to-1 representation.</p>
+<p>The key insight that let LLMs catch the world&rsquo;s eye is the <a href="https://en.wikipedia.org/wiki/Attention_Is_All_You_Need">&lsquo;attention&rsquo; mechanism</a>.</p>
+<p>Simply, it gives the neural network the ability to consider not just a word or short word sequences (n-grams, e.g bank loan), but also the context of the entire input, and the position word was in.</p>
+<p>This means that the word <em>&ldquo;bank&rdquo;</em> in <em>&ldquo;The river near the bank was deep&rdquo;</em> and <em>&ldquo;The bank near the river was crowded&rdquo;</em> will be represented and interpreted differently by the LLM.</p>
+<p>I had to spend a few moments thinking about that myself.</p>
+<p>The representation of each word takes into account all the other words in the prompt, and that means that the number of computations scale as (context length)².</p>
+<p>Effectively, this means that the computation time required to process the input grows extremely quickly with the length of the context window.</p>
+<p>(32000 tokens)² = 1 <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-05"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-05"
+    for="sidenote-checkbox-05"
+    class="sidenote-mark"
+    >billion</label
+  >
+  <small id="sidenote-05" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>1 billion seconds = 31 years<span class="sr-only">)</span>
+  </small>
+</span>
+</p>
+<p>(1 million tokens)² = 1 <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-06"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-06"
+    for="sidenote-checkbox-06"
+    class="sidenote-mark"
+    >trillion</label
+  >
+  <small id="sidenote-06" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>1 trillion seconds = 31 710 years<span class="sr-only">)</span>
+  </small>
+</span>
+.</p>
 <h4 id="context-window" class="scroll-mt-8 group">
   Context Window
   
@@ -242,8 +371,10 @@
     </a>
   
 </h4>
-<p>This scaling gives rise to a very important but frequently overlooked <a href="https://symbl.ai/developers/blog/guide-to-context-in-llms/">constraint when using LLMs: the context window length</a>. If there&rsquo;s only one thing to take away from this piece of writing, it is to keep in mind this constraint.</p>
-<p><strong>The context window length is the maximum amount of input text an LLM can consider at one time when generating a response. If your input exceeds this length, the earliest parts will fall out of the model’s awareness, limiting its ability to fully understand and respond accurately.</strong></p>
+<p>This scaling gives rise to a very important but frequently overlooked <a href="https://symbl.ai/developers/blog/guide-to-context-in-llms/">constraint when using LLMs: the context window length</a>.</p>
+<p>If there&rsquo;s only one thing to take away from this piece of writing, it is to keep in mind this constraint.</p>
+<p><strong>The context window length is the maximum amount of input text an LLM can consider at one time when generating a response.</strong></p>
+<p><strong>If your input exceeds this length, the earliest parts will fall out of the model’s awareness, limiting its ability to fully understand and respond accurately.</strong></p>
 <p>I&rsquo;ll come back to the implications of this later, after a chronological order of progression of LLMs. This will help us to understand why LLMs have gained usefulness over the last couple of years.</p>
 <h3 id="llm-generations" class="scroll-mt-8 group">
   LLM Generations
@@ -530,9 +661,54 @@
     </a>
   
 </h3>
-<p>As explained earlier, LLM model weights consist of relationships between processing units, trained by repetition on a large corpus of data.  One thing that is high quality and extremely consistent within this corpus is grammar (specifically English grammar) and spelling. This is noticeably reflected in the LLMs output, they rarely ever make grammatical or spelling errors. TODO: deep research link</p>
-<p>However, compare that to facts. Imagine that every line of text used for training has perfect grammar and spelling (this is very likely to be the case since training data is well curated). Whereas for facts, the distribution is much more varied. Even when only true facts are included, including Fact #1 may necessarily exclude Fact #2 &hellip; #n from that line of training data. This is taken to an even farther extreme for niche information, which may not be repeated much at all in the training corpus.</p>
-<p>Therefore, this gives rise to what we have termed &lsquo;hallucinations&rsquo;. The LLM needs to generate an output, and what it is very strong at is a grammatically coherent, and probably a quite-convincing writing style. It does not have a concept of &rsquo;looking up my training data&rsquo;, since that data has long since been transformed into model weights. It does not even have the capability to introspect on its model weights!</p>
+<p>As explained earlier, LLM model weights consist of relationships between processing units, trained by repetition on a large corpus of data.</p>
+<p>One thing that is high quality and extremely consistent within this corpus is <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-07"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-07"
+    for="sidenote-checkbox-07"
+    class="sidenote-mark"
+    >grammar</label
+  >
+  <small id="sidenote-07" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>specifically, English grammar, but as the training corpuses have grown so have the inclusion of other languages<span class="sr-only">)</span>
+  </small>
+</span>
+ and spelling. This is noticeably reflected in the LLMs output, they rarely ever make grammatical or spelling errors.</p>
+<p>However, lets compare that to facts.</p>
+<p>Imagine that every line of text used for training has perfect grammar and <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-08"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-08"
+    for="sidenote-checkbox-08"
+    class="sidenote-mark"
+    >spelling</label
+  >
+  <small id="sidenote-08" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>this is very likely to be the case since training data is well curated<span class="sr-only">)</span>
+  </small>
+</span>
+. Whereas for facts, the distribution is much more varied.</p>
+<p>Even when only true facts are included, including Fact #1 may necessarily exclude Fact #2 &hellip; #n from that line of training data.</p>
+<p>This is taken to an even farther extreme for niche information, which may not be repeated much at all in the training corpus.</p>
+<p>Therefore, this gives rise to what we have termed <em>&lsquo;hallucinations&rsquo;</em>.</p>
+<p>The LLM needs to generate an output, and what it is very strong at is a grammatically coherent, and probably a quite-convincing writing style.</p>
+<p>It does not have a concept of &rsquo;looking up my training data&rsquo;, since that data has long since been transformed into model weights. It does not even have the capability to introspect on its model weights!</p>
+<p>This combination of very strong linguistic abilities with a poor grounding in factual density, leads to outputs that look very plausible and convincing - but may not necessarily have a logical thread or factual basis.</p>
 <h3 id="why-does-a-larger-llm-context-window-make-them-more-capable" class="scroll-mt-8 group">
   Why does a larger LLM Context Window make them more capable?
   
@@ -558,7 +734,10 @@
     </a>
   
 </h3>
-<p>From the timeline above, we can see that despite the scaling challenges, context window lengths have increased tremendously. Prior to GPT-4, context lengths were quite limited (~6000 words) and some part of this would have been taken up by the system prompt. With this limitation, users often noticed that performance dropped off after the chat session got to a certain length, and determined that ChatGPT was generating a summary of earlier messages whenever it got too long. These days the context lengths are much longer, and it&rsquo;s <a href="https://openai.com/index/finding-gpt4s-mistakes-with-gpt-4/">hypothesised</a> that LLMs are also trained to ignore irrelevant information to reduce the chances of being side tracked.</p>
+<p>From the timeline above, we can see that despite the scaling challenges, context window lengths have increased tremendously.</p>
+<p>Prior to GPT-4, context lengths were quite limited (~6000 words) and some part of this would have been taken up by the system prompt.</p>
+<p>With this limitation, users often noticed that performance dropped off after the chat session got to a certain length, and determined that ChatGPT was generating a summary of earlier messages whenever it got too long.</p>
+<p>These days the context lengths are much longer, and it&rsquo;s <a href="https://openai.com/index/finding-gpt4s-mistakes-with-gpt-4/">hypothesised</a> that LLMs are also trained to ignore irrelevant information to reduce the chances of being side tracked.</p>
 <p>From my own experience and anecdotal accounts, it would seem that the fact-regurgitation abilities of GPT-4 to GPT-4o to GPT-4.5 hasn&rsquo;t really improved all that much, and OpenAI seems to have focused its resources on improving the reasoning abilities of the O* series.</p>
 <br />
 <h6 id="aside" class="scroll-mt-8 group">
@@ -613,16 +792,79 @@
 </h7>
 <p>This context window length limitation is why we haven&rsquo;t just gone and &lsquo;<em>ingested all of the knowledgebase into an LLM</em>&rsquo;, as often wished for in the LLM wishlist.</p>
 <p>Okay, so why don&rsquo;t we use the knowedgebase to train or fine tune an LLM?</p>
-<p>It can be thought of this way: the model weights is a soup of grammar, and abstract concepts.</p>
+<p>It can be thought of this way: the LLM&rsquo;s model weights is a soup of grammar, and abstract concepts.</p>
 <p>The larger the model, the more abstract concepts it is capable of recognising. We do not have a high quality, curated data set in our proprietary knowledgebase (unfortunately).</p>
-<p>There is just way too much noise, and very disparate topics with inconsistent terminology.</p>
+<p>There is just way too much noise, and very disparate topics with inconsistent terminology. This amplifies the above mentioned problem with a lack of grounding, even further.</p>
+<p>If you&rsquo;ve ever tried this, you probably noticed that your LLM makes stuff up that sounds very similar to the corporate dialect in your company!</p>
 <p>&lt;/aside&gt;</p>
 <br />
-<p>With the much larger context windows recently, it has become possible to insert additional relevant information (Retrieval Augmented Generation, RAG) that might be useful in generating the answer. The more relevant information the LLM has in its working memory, the more likely it is to produce a useful response.</p>
+<p>With the much larger context windows recently, it has become possible to insert additional relevant  <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-09"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-09"
+    for="sidenote-checkbox-09"
+    class="sidenote-mark"
+    >information</label
+  >
+  <small id="sidenote-09" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Also known as Retrieval Augmented Generation, RAG.<span class="sr-only">)</span>
+  </small>
+</span>
+  that might be useful in generating the answer.</p>
+<p>This information is typically retrieved using traditional information search and retrieval methods, and the most effective ones are also the same ones that power the best traditional search engines.</p>
+<p>The more relevant information the LLM has in its working memory, the more likely it is to produce a useful response, since the output will weight this input quite heavily.</p>
 <p><em><strong>The most useful AI tools these days are industry-leading because they have wrapped the LLMs with very capable context retrieval systems.</strong></em></p>
-<p>I did up a small report previously, comparing the Deep Research reports of OpenAI, Perplexity, and Gemini. It can be inferred from the results that OpenAI&rsquo;s search returns better results than even Google (What&rsquo;s going on there??), and combined with the better reasoning abilities of O1/O3, the report is actually coherent.</p>
-<p>In that report I wrote that both Gemini and Perplexity retrieves facts that are not actually applicable to the specific nuance at hand, and conflates that in the results. This also gave rise to &ldquo;hallucinations&rdquo;. I&rsquo;m not really sure I would call them hallucinations, just bad research and poor reasoning. An unconscientious human without prior knowledge in this area, would probably have made the same mistakes.</p>
-<p>For now, most systems in production (AFAIK) don&rsquo;t actually use LLMs&rsquo; novel technological improvements in their search engines. Using LLM technologies in search engines is an <a href="https://eugeneyan.com/writing/recsys-llm/">area of active research</a>, so perhaps we&rsquo;ll see more interesting results there soon.</p>
+<p>I did up a small report previously, comparing the Deep Research reports of OpenAI, Perplexity, and Gemini. It can be inferred from the results that OpenAI&rsquo;s search returns better results than even <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-10"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-10"
+    for="sidenote-checkbox-10"
+    class="sidenote-mark"
+    >Google</label
+  >
+  <small id="sidenote-10" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>(What's going on there?? Isn't search your forte?)<span class="sr-only">)</span>
+  </small>
+</span>
+, and combined with the better reasoning abilities of O1/O3, the report is actually significantly more <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-11"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-11"
+    for="sidenote-checkbox-11"
+    class="sidenote-mark"
+    >coherent.</label
+  >
+  <small id="sidenote-11" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>As of Apr 2025, it seems that the new Gemini 2.5 Pro has caught up a fair bit<span class="sr-only">)</span>
+  </small>
+</span>
+</p>
+<p>In that report I wrote that both Gemini and Perplexity retrieves facts that are not actually applicable to the specific nuance at hand, and conflates that in the results.</p>
+<p>This also gave rise to &ldquo;hallucinations&rdquo;. I&rsquo;m not really sure I would call them hallucinations, just bad research and poor reasoning.</p>
+<p>An unconscientious human without prior knowledge in this area, would probably have made the same mistakes.</p>
+<p>For now, most systems in production (AFAIK) don&rsquo;t actually use LLMs&rsquo; novel technological improvements in their search engines.</p>
+<p>Using LLM technologies in search engines is an <a href="https://eugeneyan.com/writing/recsys-llm/">area of active research</a>, so perhaps we&rsquo;ll see more interesting results there soon.</p>
 <h4 id="fine-tuning--reinforcement-learning-with-human-feedback-rlhf" class="scroll-mt-8 group">
   Fine tuning &amp; Reinforcement Learning with Human Feedback (RLHF)
   
@@ -648,9 +890,14 @@
     </a>
   
 </h4>
-<p>I haven&rsquo;t really touched on this topic, and it could probably fill a tome(s) on its own if we went deep into it.  Earlier I mentioned that LLMs are trained on a large training corpus, and at some point in the timeline &ldquo;Reinforcement Learning with Human Feedback&rdquo; (RLHF) started being used to improve the LLMs. This process means that the LLMs output are no longer just a statistical reflection of the training data. It&rsquo;s another step in the process, and it adjusts the weight by rewarding the training process for producing outputs that humans find ideal.</p>
-<p>The iterative process of RLHF and fine tuning selects for LLMs that produce logical output, and is good at following instructions (given in the prompt). It then becomes inaccurate to say that LLMs merely produce word sequences randomly, but more accurate to say that they have been trained to mimic human reasoning patterns.</p>
-<p>Does the ability to mimic human reasoning patterns mean that they are capable of reasoning and critical thinking? That&rsquo;s a difficult to quantify criteria, and it becomes more of a philosophical question. What is intelligence?</p>
+<p>I haven&rsquo;t really touched on this topic, and it could probably fill a tome(s) on its own if we went deep into it.</p>
+<p>Earlier I mentioned that LLMs are trained on a large training corpus, and at some point in the timeline &ldquo;Reinforcement Learning with Human Feedback&rdquo; (RLHF) started being used to improve the LLMs.</p>
+<p>This process means that the LLMs output are no longer just a statistical reflection of the training data.</p>
+<p>It&rsquo;s another step in the process, and it adjusts the weight by rewarding the training process for producing outputs that humans find ideal.</p>
+<p>The iterative process of RLHF and fine tuning selects for LLMs that produce logical output, and is good at following instructions (given in the prompt).</p>
+<p>It then becomes inaccurate to say that LLMs merely produce word sequences randomly, but more accurate to say that they have been trained to mimic human reasoning patterns.</p>
+<p>Does the ability to mimic human reasoning patterns mean that they are capable of reasoning and critical thinking? That&rsquo;s a difficult to quantify criteria, and it becomes more of a philosophical question.</p>
+<p>What is intelligence?</p>
 <p>The benchmarks do certainly show that the latest frontier models are better at solving math problems than a significant proportion of the human population.</p>
 <p>Think about it - would a random word generator be able to break down this task and perform it:</p>
 <p><em>&ldquo;Reduce all the title headings in this article by one level, and capitalise them to title case&rdquo;</em></p>
@@ -687,9 +934,14 @@
     </a>
   
 </h4>
-<p>I&rsquo;ve personally maintained the stance that LLMs enable a new mode of Human-Computer Interaction, just like a mouse-driven Graphical User Interface did. This lengthy writeup does support my opinion, and that LLMs are a front-end to other knowledge retrieval systems, operated by natural language. It can also interface with tools, and it is capable of inferring that you require certain tool usage while trying to complete the task it has been given.</p>
-<p>The large increase in context window length has enabled the architectures of &ldquo;retrieval augmented generation&rdquo;, and &ldquo;agentic AI&rdquo;. Agentic AI simply means allowing the LLM to expand the task instructions and breaking it down into sub-problems that can either be reasoned through or require the usage of tools to resolve.</p>
-<p>When we use LLMs in our daily work, it is important to remember that they cannot read your mind, and they generally do not have specialist, niche knowledge. What they are is a good representation of the abstract concepts that humans take for granted. When provided with relevant information, they can make use of this understanding of abstract concepts, and synthesise the information into a workable and coherent output.</p>
+<p>I&rsquo;ve personally maintained the stance that LLMs enable a new mode of Human-Computer Interaction, just like a mouse-driven Graphical User Interface did.</p>
+<p>This lengthy writeup reflects that opinion and that LLMs are a front-end to other knowledge retrieval systems, operated by natural language.</p>
+<p>It can also interface with tools, and it is capable of inferring that you require certain tool usage while trying to complete the task it has been given.</p>
+<p>The large increase in context window length has enabled the architectures of &ldquo;retrieval augmented generation&rdquo;, and &ldquo;agentic AI&rdquo;.</p>
+<p>Agentic AI simply means allowing the LLM to expand the task instructions and breaking it down into sub-problems that can either be reasoned through or require the usage of tools to resolve.</p>
+<p>When we use LLMs in our daily work, it is important to remember that they cannot read your mind, and they generally do not have specialist, niche knowledge.</p>
+<p>What they are is a good representation of the abstract concepts that humans take for granted.</p>
+<p>When provided with relevant information, they can make use of this understanding of abstract concepts, and synthesise the information into a workable and coherent output.</p>
   </article>
     <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
     <section class="flex flex-col space-y-4">
