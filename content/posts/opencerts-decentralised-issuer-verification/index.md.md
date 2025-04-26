@@ -19,7 +19,11 @@ By allowing the DNS system to be used as an identity registry, we let domain nam
 
 OpenCerts 1.0 worked on a centralised registry model, governed by SkillsFuture Singapore and administered by GovTech. This created not just a single point of failure but also an unsustainable bottleneck when it came to approvals and identity verification.
 
-OpenCerts 2.0 will continue to use this centralised registry model for the institutions that require a higher level of identity assurance. For issuers without this requirement they will be able to simply tie their issuance to their domain name, (e.g `example.openattestation.com`). When a user views a certificate issued under this model, they will see "Certificate issued by `example.openattestation.com`".
+OpenCerts 2.0 will continue to use this centralised registry model for the institutions that require a higher level of identity assurance. 
+
+For issuers without this requirement they will be able to simply tie their issuance to their domain name, i.e **example.openattestation.com**. 
+
+When a user views a certificate issued under this model, they will see **"Certificate issued by example.openattestation.com"**.
 
 ## How it works
 
