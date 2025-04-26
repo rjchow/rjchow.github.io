@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astigmatism Simulator</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #controls { margin-bottom: 10px; }
+    label { display: block; margin: 5px 0; }
+    canvas { border: 1px solid #ccc; max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <h1>Astigmatism Simulator</h1>
+  <div id="controls">
+    <label>Upload Image: <input type="file" id="upload" accept="image/*"></label>
+    <label>Axis (<span id="axisVal">0°</span>):
+      <input type="range" id="axis" min="0" max="180" value="0">
+    </label>
+    <label>Strength (<span id="strengthVal">6</span>):
+      <input type="range" id="strength" min="0.1" max="20" step="0.1" value="6">
+    </label>
+  </div>
+  <canvas id="display"></canvas>
+
+  <script>
+    const upload = document.getElementById('upload');
+    const axisSlider = document.getElementById('axis');
+    const strengthSlider = document.getElementById('strength');
+    const axisVal = document.getElementById('axisVal');
+    const strengthVal = document.getElementById('strengthVal');
+    const display = document.getElementById('display');
+
+    let img = new Image();
+    let off1 = document.createElement('canvas');
+    let off2 = document.createElement('canvas');
+    let tmp = document.createElement('canvas');
+    let off3 = document.createElement('canvas');
+    let ctx1 = off1.getContext('2d');
+    let ctx2 = off2.getContext('2d');
+    let ctxTmp = tmp.getContext('2d');
+    let ctx3 = off3.getContext('2d');
+    let ctxDisp = display.getContext('2d');
+
+    let origW, origH, diag;
+
+    upload.addEventListener('change', () => {
+      const file = upload.files[0];
+      if (!file) return;
+      img.src = URL.createObjectURL(file);
+    });
+
+    img.onload = () => {
+      origW = img.width;
+      origH = img.height;
+      display.width = origW;
+      display.height = origH;
+      off1.width = origW;
+      off1.height = origH;
+
+      diag = Math.ceil(Math.sqrt(origW*origW + origH*origH));
+      [off2, tmp, off3].forEach(c => {
+        c.width = diag;
+        c.height = diag;
+      });
+
+      render();
+    };
+
+    [axisSlider, strengthSlider].forEach(el =>
+      el.addEventListener('input', render)
+    );
+
+    function updateLabels(axis, strength) {
+      axisVal.textContent = axis + '°';
+      strengthVal.textContent = strength;
+    }
+
+    function generateKernel(sigma, radius) {
+      const len = radius * 2 + 1;
+      const kernel = new Float32Array(len);
+      const sigma2 = sigma * sigma;
+      let sum = 0;
+      for (let i = -radius; i <= radius; i++) {
+        const v = Math.exp(-i * i / (2 * sigma2));
+        kernel[i + radius] = v;
+        sum += v;
+      }
+      for (let i = 0; i < len; i++) kernel[i] /= sum;
+      return {kernel, radius};
+    }
+
+    function convolve1D(srcData, dstData, w, h, kernel, radius, horizontal) {
+      const out = dstData.data;
+      const inp = srcData.data;
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          let r=0, g=0, b=0, a=0;
+          for (let k = -radius; k <= radius; k++) {
+            let ix = horizontal ? x + k : x;
+            let iy = horizontal ? y : y + k;
+            ix = Math.min(w-1, Math.max(0, ix));
+            iy = Math.min(h-1, Math.max(0, iy));
+            const idx = (iy * w + ix) * 4;
+            const weight = kernel[k + radius];
+            r += inp[idx] * weight;
+            g += inp[idx+1] * weight;
+            b += inp[idx+2] * weight;
+            a += inp[idx+3] * weight;
+          }
+          const oidx = (y * w + x) * 4;
+          out[oidx] = r;
+          out[oidx+1] = g;
+          out[oidx+2] = b;
+          out[oidx+3] = a;
+        }
+      }
+    }
+
+    function render() {
+      if (!origW) return;
+      const axis = parseFloat(axisSlider.value);
+      const strength = parseFloat(strengthSlider.value);
+      updateLabels(axis, strength);
+
+      const sigma1 = 1;
+      const sigma2 = strength;
+      const radius = Math.ceil(sigma2 * 3);
+
+      // draw original
+      ctx1.clearRect(0, 0, origW, origH);
+      ctx1.drawImage(img, 0, 0);
+
+      // rotate into off2
+      ctx2.clearRect(0, 0, diag, diag);
+      ctx2.save();
+      ctx2.translate(diag/2, diag/2);
+      ctx2.rotate(-axis * Math.PI/180);
+      ctx2.drawImage(off1, -origW/2, -origH/2);
+      ctx2.restore();
+
+      // horizontal blur
+      ctxTmp.clearRect(0, 0, diag, diag);
+      ctxTmp.drawImage(off2, 0, 0);
+      let src = ctxTmp.getImageData(0, 0, diag, diag);
+      let dst = ctxTmp.createImageData(diag, diag);
+      convolve1D(src, dst, diag, diag, generateKernel(sigma1, radius).kernel, radius, true);
+      ctxTmp.putImageData(dst, 0, 0);
+
+      // vertical blur
+      src = ctxTmp.getImageData(0, 0, diag, diag);
+      dst = ctx3.createImageData(diag, diag);
+      convolve1D(src, dst, diag, diag, generateKernel(sigma2, radius).kernel, radius, false);
+      ctx3.putImageData(dst, 0, 0);
+
+      // crop back to original size
+      const sx = (diag - origW) / 2;
+      const sy = (diag - origH) / 2;
+      const cropped = ctx3.getImageData(sx, sy, origW, origH);
+
+      // draw back rotated onto display
+      const cropCanvas = document.createElement('canvas');
+      cropCanvas.width = origW;
+      cropCanvas.height = origH;
+      cropCanvas.getContext('2d').putImageData(cropped, 0, 0);
+
+      ctxDisp.clearRect(0, 0, origW, origH);
+      ctxDisp.save();
+      ctxDisp.translate(origW/2, origH/2);
+      ctxDisp.rotate(axis * Math.PI/180);
+      ctxDisp.drawImage(cropCanvas, -origW/2, -origH/2);
+      ctxDisp.restore();
+    }
+  </script>
+</body>
+</html>
+

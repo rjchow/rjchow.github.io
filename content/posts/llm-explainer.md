@@ -253,6 +253,6 @@ Agentic AI simply means allowing the LLM to expand the task instructions and bre
 
 When we use LLMs in our daily work, it is important to remember that they cannot read your mind, and they generally do not have specialist, niche knowledge. 
 
-What they are is a good representation of the abstract concepts that humans take for granted. 
+What they are is a good representation of the abstract concepts that humans take for **granted**. 
 
 When provided with relevant information, they can make use of this understanding of abstract concepts, and synthesise the information into a workable and coherent output.
