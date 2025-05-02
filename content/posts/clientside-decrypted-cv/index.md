@@ -58,7 +58,7 @@ I'll write this up in a bit :-)
 
 ## Play with it here
 
-[Demo](/cv-encryption-demo/index.html#{"userSecretKey":"a28e9b1d97a8d15479d774354f75f3488f957571cdcf6ca793ffc2200169cdb2"})
+<a target="_blank" rel="noopener noreferrer" href="/cv-encryption-demo/index.html#%7B%22userSecretKey%22:%22a28e9b1d97a8d15479d774354f75f3488f957571cdcf6ca793ffc2200169cdb2%22%7D">Demo</a>
 
 Open the DevTools and observe that is fetched, and you'll see that if you try to access the URL without the decryption key (or modify it), it fails to decrypt. 
 
