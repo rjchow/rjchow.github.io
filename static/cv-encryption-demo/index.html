@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AES-KW Unwrap Demo</title>
+  </head>
+  <body>
+    <iframe
+      id="viewer"
+      style="width: 100%; height: 100vh; border: none"
+    ></iframe>
+    <script>
+      (async () => {
+        // get kekHex from query anchor #userSecretKey - #anchor should be a json object with key userSecretKey
+        const anchorJson = decodeURIComponent(location.hash.slice(1));
+        const anchorObj = JSON.parse(anchorJson);
+        if (
+          !anchorObj.userSecretKey ||
+          !/^[0-9a-f]+$/i.test(anchorObj.userSecretKey)
+        ) {
+          throw new Error("Invalid key format");
+        }
+        const kekHex = anchorObj.userSecretKey;
+        // fetch this from dek.wrap.b64
+        const wrappedB64 = await fetch("dek.wrap.b64").then((r) => r.text());
+
+        // 2) Decode KEK hex → Uint8Array
+        const kekBytes = new Uint8Array(
+          kekHex.match(/.{2}/g).map((h) => parseInt(h, 16))
+        );
+
+        // 3) Import KEK for AES-KW
+        const kekKey = await crypto.subtle.importKey(
+          "raw",
+          kekBytes,
+          "AES-KW",
+          false,
+          ["unwrapKey"]
+        );
+
+        // 4) Decode wrapped DEK (base64 → Uint8Array)
+        const wrappedBytes = Uint8Array.from(
+          atob(wrappedB64.replace(/\s+/g, "")),
+          (c) => c.charCodeAt(0)
+        );
+
+        // 5) Unwrap the DEK under your KEK
+        const dekKey = await crypto.subtle.unwrapKey(
+          "raw", // format of wrapped key
+          wrappedBytes.buffer, // ArrayBuffer
+          kekKey, // our KEK
+          "AES-KW", // wrap algorithm
+          { name: "AES-GCM" }, // target algorithm for DEK
+          true, // extractable
+          ["decrypt"] // usage
+        );
+
+        // 6) Export and hex-print to verify it matches your original dek.hex
+        const dekRaw = new Uint8Array(
+          await crypto.subtle.exportKey("raw", dekKey)
+        );
+        const dekHex = Array.from(dekRaw)
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+
+        const buf = await fetch("cv.enc").then((r) => r.arrayBuffer());
+
+        // 2) split: first 12 bytes = IV, rest = ciphertext + 16-byte tag
+        const iv = buf.slice(0, 12);
+        const ct = buf.slice(12);
+
+        // 3) decrypt with AES-GCM + explicit tagLength
+        const plainBuf = await crypto.subtle.decrypt(
+          {
+            name: "AES-GCM",
+            iv,
+            tagLength: 128,
+          },
+          dekKey,
+          ct
+        );
+
+        // 4) render HTML
+        const html = new TextDecoder().decode(plainBuf);
+        document.getElementById("viewer").srcdoc = html;
+      })().catch((e) => {
+        document.getElementById("viewer").srcdoc = `
+    <div style="padding: 20px; color: red;">
+      <h2>Decryption Failed</h2>
+      <p>Unable to decrypt content. Please verify your key.</p>
+    </div>
+  `;
+      });
+    </script>
+  </body>
+</html>
