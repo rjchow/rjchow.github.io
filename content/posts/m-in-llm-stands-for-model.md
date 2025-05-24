@@ -27,20 +27,27 @@ Due to the probabilistic nature of LLM training, it's the fine details of realit
 
 A short excerpt from [an article by John Salvatier](http://johnsalvatier.org/blog/2017/reality-has-a-surprising-amount-of-detail), pre-dating the era of LLMs.
 
->And if there’s one thing I’ve learned from all this building, it’s that reality has a surprising amount of detail.
->
->This turns out to explain why its so easy for people to end up intellectually stuck. Even when they’re literally the best in the world in their field.
->
 >Consider building some basement stairs for a moment. Stairs seem pretty simple at first, and at a high level they are simple, just two long, wide parallel boards (2” x 12” x 16’), some boards for the stairs and an angle bracket on each side to hold up each stair. But as you actually start building you’ll find there’s a surprising amount of nuance.
 >
 >The first thing you’ll notice is that there are actually quite a few subtasks. Even at a high level, you have to cut both ends of the 2x12s at the correct angles; then screw in some u-brackets to the main floor to hold the stairs in place; then screw in the 2x12s into the u-brackets; then attach the angle brackets for the stairs; then screw in the stairs.
+>
+>\[... condensed for brevity\]
+>
+>Next you’ll notice that each of those steps above decomposes into several steps, some of which have some tricky details to them due to the properties of the materials and task and the limitations of yourself and your tools.
+>
+>\[...]
+>
+>At every step and every level there’s an abundance of detail with material consequences.
+>
+>It’s tempting to think ‘So what?’ and dismiss these details as incidental or specific to stair carpentry. And they are specific to stair carpentry; that’s what makes them details. But the existence of a surprising number of meaningful details is not specific to stairs. Surprising detail is a near universal property of getting up close and personal with reality.
+
 
 Anyone that has ever built a product for users (even something for yourself) would know that building something is never as easy as it sounds. This is because the closer you look at real world systems, or real world users, the more complex they get. Like fractals, every part reveals smaller moving parts, each with its own context, dependencies, and gotchas.
 
 In a product with heritage and legacy, you also need to understand how any change fits into the context of legacy decisions, constraints, team workflows, user expectations, security concerns, and business goals.
 # Context and Reasoning
 
-The finest examples of LLM productivity improvements show up when the LLM is properly prompted with all the context around the task. 
+The finest examples of LLM productivity improvements show up when the LLM is properly prompted with all the {{< sidenote context >}}for this reason, I believe that remote-first asynchronous companies have an edge with LLM usage. If all decisions and context around them are written down, it can be easily retrieved for LLMs.{{< /sidenote >}} around the task, and is being driven by someone who *has this context in their head*. 
 
 While it is debatable about whether LLMs can truly reason, it can be quite a magical experience watching the chain-of-thoughts internal monologue on a reasoning model. 
 
