@@ -63,6 +63,7 @@ LLMs operate on compressed patterns, and those patterns flatten out the very det
 
 The difference is critical: scientists and engineers handle the unknown by interrogating it. Models interpolate, extrapolate or simulate.
 
+This is why low-effort AI written articles just read like slop. They have a very low signal to noise ratio, and do not contain any original insight.
 # **They’re Tools, Not Replacements**
 
 This doesn’t mean LLMs are useless. Far from it. They can accelerate tedious tasks, help explore ideas, and even spot bugs. 
