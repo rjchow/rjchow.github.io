@@ -69,3 +69,5 @@ This is why low-effort AI written articles just read like slop. They have a very
 This doesn’t mean LLMs are useless. Far from it. They can accelerate tedious tasks, help explore ideas, and even spot bugs. 
 
 But they’re force multipliers - not substitutes. Like any tool, they require someone who knows what they’re doing to wield them safely and effectively.
+
+Since they are a abstract map of concepts, in varying levels of detail, they are also quite good at surfacing related concepts that you may have missed. I don't think anyone's denied that LLMs are quite good at taking you from 0 to a strong junior!
